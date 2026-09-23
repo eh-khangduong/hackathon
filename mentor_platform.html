@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Step</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        hero: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 950: '#111827' },
+                        swag: { purple: '#8b5cf6', pink: '#ec4899', emerald: '#10b981', amber: '#f59e0b' }
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body { background: #030712; color: #f3f4f6; }
+        .gradient-border-glow { background: linear-gradient(135deg, #4f46e5, #8b5cf6, #ec4899); }
+        .mentor-step-active { border-color: rgba(139, 92, 246, .55); background: rgba(139, 92, 246, .1); }
+    </style>
+</head>
+<body class="antialiased min-h-screen selection:bg-hero-600 selection:text-white">
+    <header class="bg-slate-950/90 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            <a href="platform.html" class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl gradient-border-glow p-0.5 flex items-center justify-center">
+                    <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center"><i data-feather="zap" class="text-swag-purple w-4 h-4"></i></div>
+                </div>
+                <div><span class="font-extrabold text-base text-white">Next<span class="text-hero-400">Step</span></span><span class="text-[10px] text-slate-400 block">Next Step</span></div>
+            </a>
+            <div class="flex items-center gap-2">
+                <a href="career_pivot_platform.html" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all">Career Flow</a>
+                <button onclick="openRedeemModal()" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl transition-all">Redeem Rewards</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        <section class="bg-gradient-to-r from-slate-900 via-hero-950 to-slate-900 rounded-3xl p-6 shadow-xl border border-slate-800">
+            <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-2xl bg-swag-purple/20 border border-swag-purple/40 flex items-center justify-center text-swag-purple font-bold text-xl">MW</div>
+                    <div>
+                        <div class="flex items-center gap-2"><h1 class="text-xl font-bold text-white">Marcus Wright</h1><span class="bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/30">Verified Senior Mentor</span></div>
+                        <p class="text-xs text-slate-300">Lead Product Manager @ Atlassian Alumni • 38 Mentees Guided</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 bg-black/40 p-3.5 rounded-2xl border border-slate-800">
+                    <div class="text-right"><span class="block text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Hero Rewards Balance</span><span class="text-lg font-extrabold text-amber-400">4,850 Pts ($485 AUD)</span></div>
+                    <button onclick="openRedeemModal()" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl">Redeem</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-slate-900 rounded-3xl p-6 shadow-xl border border-slate-800 space-y-5">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-3 pb-4 border-b border-slate-800">
+                <div><span class="text-[10px] font-bold uppercase tracking-wider text-swag-purple">Mentor onboarding path</span><h2 class="text-lg font-bold text-white mt-1">Turn experience into measurable career lift</h2><p class="text-xs text-slate-400 mt-1">Match your expertise with the right mentees and get rewarded for meaningful outcomes.</p></div>
+                <span id="mentor-step-counter" class="text-xs text-slate-400 font-mono bg-slate-950 px-2.5 py-1 rounded-full border border-slate-800">Step 1 of 4</span>
+            </div>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-2">
+                <button onclick="setMentorStep(1)" class="mentor-step mentor-step-active text-left p-3 rounded-xl border transition-all"><span class="text-[10px] text-swag-purple font-bold">01</span><span class="block text-xs font-bold text-white mt-1">Verify expertise</span></button>
+                <button onclick="setMentorStep(2)" class="mentor-step text-left p-3 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-600 transition-all"><span class="text-[10px] text-slate-500 font-bold">02</span><span class="block text-xs font-bold text-slate-300 mt-1">Set capacity</span></button>
+                <button onclick="setMentorStep(3)" class="mentor-step text-left p-3 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-600 transition-all"><span class="text-[10px] text-slate-500 font-bold">03</span><span class="block text-xs font-bold text-slate-300 mt-1">Coach & review</span></button>
+                <button onclick="setMentorStep(4)" class="mentor-step text-left p-3 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-600 transition-all"><span class="text-[10px] text-slate-500 font-bold">04</span><span class="block text-xs font-bold text-slate-300 mt-1">Grow outcomes</span></button>
+            </div>
+            <div id="mentor-step-detail" class="bg-slate-950 rounded-2xl border border-slate-800 p-5 flex flex-col md:flex-row md:items-center justify-between gap-4"></div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-1"><span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Pending Submissions</span><span class="text-2xl font-bold text-white block">2 Reviews</span><span class="text-[11px] text-amber-400">Avg turnaround: 24h</span></div>
+            <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-1"><span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Mentorship Hours</span><span class="text-2xl font-bold text-white block">18.5 Hrs</span><span class="text-[11px] text-emerald-400">+4.2 hrs this month</span></div>
+            <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-1"><span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Mentee Placement Rate</span><span class="text-2xl font-bold text-white block">84%</span><span class="text-[11px] text-hero-400">Eligible for $500 bounty</span></div>
+            <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-1"><span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Peer Rating</span><span class="text-2xl font-bold text-white block">4.95 <i data-feather="star" class="inline w-4 h-4 fill-amber-400 text-amber-400"></i></span><span class="text-[11px] text-slate-400">28 verified reviews</span></div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 bg-slate-900 rounded-3xl p-6 shadow-xl border border-slate-800 space-y-4">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-800"><h2 class="text-base font-bold text-white flex items-center gap-2"><i data-feather="file-text" class="text-hero-400"></i> Micro-Project Review Requests</h2><span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2.5 py-0.5 rounded-full font-semibold">Earn 300 Hero Pts per review</span></div>
+                <div id="mentor-reviews-list" class="space-y-3"></div>
+            </div>
+            <div class="bg-slate-900 rounded-3xl p-6 shadow-xl border border-slate-800 space-y-4">
+                <h2 class="text-base font-bold text-white flex items-center gap-2"><i data-feather="gift" class="text-swag-purple"></i> Mentor Rewards</h2><p class="text-xs text-slate-400">Incentives for senior professionals:</p>
+                <div class="space-y-3 text-xs">
+                    <div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800"><b class="text-white block">1:1 Coaching</b><p class="text-slate-400 mt-1">Earn $80 AUD/hr equivalent or set your own rate.</p></div>
+                    <div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800"><b class="text-white block">Project Reviews</b><p class="text-slate-400 mt-1">Earn 300 Hero Points per validated review.</p></div>
+                    <div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800"><b class="text-white block">Placement Bounty</b><p class="text-slate-400 mt-1">Receive $500 AUD when a mentee lands a target role.</p></div>
+                    <div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800"><b class="text-white block">Learning Credits</b><p class="text-slate-400 mt-1">Unlock quarterly course, conference, and leadership credits.</p></div>
+                    <div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800"><b class="text-white block">Verified Profile</b><p class="text-slate-400 mt-1">Build a visible impact record with ratings and outcome badges.</p></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="modal-container" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[110] flex items-center justify-center hidden p-4"><div class="bg-slate-900 border border-slate-800 text-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4"><div class="flex items-center justify-between pb-3 border-b border-slate-800"><h3 id="modal-title" class="text-base font-bold">Action</h3><button onclick="closeModal()"><i data-feather="x" class="w-5 h-5 text-slate-400"></i></button></div><div id="modal-body" class="text-xs text-slate-300 leading-relaxed space-y-3"></div><div class="flex justify-end"><button onclick="closeModal()" class="px-4 py-2 bg-slate-800 text-white rounded-xl text-xs font-semibold">Close</button></div></div></div>
+
+    <script>
+        const MENTOR_STEPS = {
+            1: { title: 'Verify your expertise', description: 'Connect your Employment Hero profile, confirm your seniority, and select the roles or skills where your lived experience can help a career changer.', action: 'Review expertise profile', icon: 'shield' },
+            2: { title: 'Set your mentoring capacity', description: 'Choose the hours, session format, and project topics that fit your schedule. You stay in control of when and how you contribute.', action: 'Set weekly availability', icon: 'calendar' },
+            3: { title: 'Coach and review proof of work', description: 'Book focused 1:1 sessions or review practical submissions. Give structured feedback that turns effort into a verified skill badge.', action: 'Open review queue', icon: 'message-square' },
+            4: { title: 'Grow outcomes and rewards', description: 'Track mentee progress, celebrate placements, and redeem points for cash, gift cards, learning credits, or conference development.', action: 'View reward options', icon: 'trending-up' }
+        };
+        const REVIEWS = [
+            { mentee: 'Jordan S.', project: 'Retention Playbook for AussieSaaS', submitted: '2 hours ago' },
+            { mentee: 'Alex M.', project: 'SQL Query Optimization Script', submitted: 'Yesterday' }
+        ];
+        function setMentorStep(step) {
+            const data = MENTOR_STEPS[step] || MENTOR_STEPS[1];
+            document.getElementById('mentor-step-counter').innerText = `Step ${step} of 4`;
+            document.getElementById('mentor-step-detail').innerHTML = `<div class="flex items-start gap-3"><div class="w-10 h-10 rounded-xl bg-swag-purple/15 border border-swag-purple/30 text-swag-purple flex items-center justify-center shrink-0"><i data-feather="${data.icon}" class="w-5 h-5"></i></div><div><h3 class="text-sm font-bold text-white">${data.title}</h3><p class="text-xs text-slate-400 leading-relaxed mt-1 max-w-2xl">${data.description}</p></div></div><button onclick="openStepModal(${step})" class="shrink-0 px-4 py-2.5 bg-swag-purple hover:bg-purple-600 text-white font-semibold rounded-xl text-xs">${data.action}</button>`;
+            document.querySelectorAll('.mentor-step').forEach((button, index) => button.classList.toggle('mentor-step-active', index + 1 === step));
+            feather.replace();
+        }
+        function openModal(title, body) { document.getElementById('modal-title').innerText = title; document.getElementById('modal-body').innerHTML = body; document.getElementById('modal-container').classList.remove('hidden'); feather.replace(); }
+        function closeModal() { document.getElementById('modal-container').classList.add('hidden'); }
+        function openStepModal(step) { const data = MENTOR_STEPS[step]; openModal(data.title, `<p>${data.description}</p><p class="text-emerald-400 font-semibold">This action is ready to connect to the mentor setup workflow.</p>`); }
+        function renderReviews() { document.getElementById('mentor-reviews-list').innerHTML = REVIEWS.map(r => `<div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800 flex items-center justify-between text-xs gap-3"><div><b class="text-white">${r.mentee}</b> submitted <span class="text-hero-400">${r.project}</span><span class="block text-[10px] text-slate-500">Submitted ${r.submitted}</span></div><button onclick="openReviewModal('${r.mentee}', '${r.project}')" class="px-3.5 py-2 bg-swag-purple hover:bg-purple-600 text-white font-semibold rounded-xl shrink-0">Review & Claim 300 Pts</button></div>`).join(''); }
+        function openReviewModal(mentee, project) { openModal(`Review Deliverable: ${mentee}`, `<p>Reviewing submission: <b class="text-white">${project}</b></p><textarea class="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white" rows="3" placeholder="Write constructive feedback for the mentee..."></textarea><button onclick="confirmReview()" class="w-full py-2.5 bg-swag-purple text-white font-semibold rounded-xl">Approve & Claim 300 Hero Points</button>`); }
+        function confirmReview() { closeModal(); openModal('Review approved', '<p class="text-emerald-400 font-bold">+300 Hero Points credited to your account.</p><p>The mentee profile now has a Verified Proof Badge.</p>'); }
+        function openRedeemModal() { openModal('Redeem Hero Rewards', '<p>Select how to withdraw your balance of <b class="text-amber-400">4,850 Hero Points ($485 AUD)</b>.</p><button onclick="closeModal()" class="w-full py-2.5 bg-emerald-600 text-white font-semibold rounded-xl">Payout $485 via Swag Stash</button><button onclick="closeModal()" class="w-full py-2.5 bg-slate-800 text-white font-semibold rounded-xl">Redeem retail gift cards</button>'); }
+        document.addEventListener('DOMContentLoaded', () => { feather.replace(); setMentorStep(1); renderReviews(); });
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Step</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { hero: { 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5' }, swag: { purple: '#8b5cf6', pink: '#ec4899', emerald: '#10b981' } } } } };
+    </script>
+    <style>
+        body { background: #030712; color: #f3f4f6; }
+        .gradient-border-glow { background: linear-gradient(135deg, #4f46e5, #8b5cf6, #ec4899); }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex items-center justify-center p-4">
+    <main class="w-full max-w-4xl">
+        <div class="text-center mb-10"><div class="inline-flex items-center gap-3 mb-5"><div class="w-10 h-10 rounded-xl gradient-border-glow p-0.5"><div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center"><i data-feather="zap" class="text-swag-purple"></i></div></div><span class="text-2xl font-extrabold text-white">Next<span class="text-hero-400">Step</span></span></div><p class="text-xs uppercase tracking-[.2em] text-slate-500">Choose your platform</p><h1 class="text-3xl sm:text-4xl font-extrabold text-white mt-3">Move careers forward, together.</h1><p class="text-sm text-slate-400 mt-3 max-w-xl mx-auto">Select the experience that matches how you want to participate in the Next Step talent ecosystem.</p></div>
+        <section class="grid md:grid-cols-2 gap-5">
+            <a href="career_pivot_platform.html" class="group bg-slate-900 border border-slate-800 hover:border-hero-500/60 rounded-3xl p-7 transition-all shadow-xl">
+                <div class="w-12 h-12 rounded-2xl bg-hero-500/15 border border-hero-500/30 text-hero-400 flex items-center justify-center mb-6"><i data-feather="compass"></i></div><span class="text-[10px] uppercase tracking-wider font-bold text-hero-400">For career changers</span><h2 class="text-2xl font-bold text-white mt-2">Build your next move</h2><p class="text-sm text-slate-400 leading-relaxed mt-3">Map your transferable skills, close capability gaps, complete real-world projects, and unlock a verified path to your target role.</p><span class="inline-flex items-center gap-2 mt-7 text-xs font-bold text-white group-hover:text-hero-400">Open career pivot <i data-feather="arrow-right" class="w-4 h-4"></i></span>
+            </a>
+            <a href="mentor_platform.html" class="group bg-slate-900 border border-slate-800 hover:border-swag-purple/60 rounded-3xl p-7 transition-all shadow-xl">
+                <div class="w-12 h-12 rounded-2xl bg-swag-purple/15 border border-swag-purple/30 text-swag-purple flex items-center justify-center mb-6"><i data-feather="award"></i></div><span class="text-[10px] uppercase tracking-wider font-bold text-swag-purple">For mentors</span><h2 class="text-2xl font-bold text-white mt-2">Turn experience into impact</h2><p class="text-sm text-slate-400 leading-relaxed mt-3">Guide career changers through focused coaching and project reviews while earning rewards, recognition, and placement bonuses.</p><span class="inline-flex items-center gap-2 mt-7 text-xs font-bold text-white group-hover:text-swag-purple">Open mentor platform <i data-feather="arrow-right" class="w-4 h-4"></i></span>
+            </a>
+        </section>
+        <div class="text-center mt-8"><a href="index.html" class="text-xs text-slate-500 hover:text-white transition-colors">Back to Next Step home</a></div>
+    </main>
+    <script>document.addEventListener('DOMContentLoaded', () => feather.replace());</script>
+</body>
+</html>
