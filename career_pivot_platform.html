@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Career Mobility - Employment Hero Hackathon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        hero: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#1e1b4b',
+                            dark: '#090d16',
+                        },
+                        swag: {
+                            purple: '#8b5cf6',
+                            pink: '#ec4899',
+                            emerald: '#10b981',
+                            amber: '#f59e0b',
+                            cyan: '#06b6d4',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #030712;
+            color: #f3f4f6;
+        }
+        .gradient-border-glow {
+            background: linear-gradient(135deg, #4f46e5, #8b5cf6, #ec4899);
+        }
+        .progress-dial {
+            transition: stroke-dasharray 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .tab-btn-active {
+            border-bottom: 2px solid #818cf8;
+            color: #ffffff;
+            font-weight: 600;
+            background: rgba(99, 102, 241, 0.08);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col custom-scrollbar selection:bg-hero-600 selection:text-white">
+
+    <div id="intake-screen-overlay" class="fixed inset-0 z-[100] bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+        <div class="max-w-2xl w-full bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl text-white space-y-6">
+            
+            <div class="space-y-3 border-b border-slate-800 pb-5">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="w-8 h-8 rounded-xl bg-hero-600 flex items-center justify-center text-white shadow-lg shadow-hero-600/30">
+                            <i data-feather="compass" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-hero-400 block">Employment Hero • Hackathon</span>
+                            <span class="text-[11px] text-slate-400">Career Pivot Onboarding</span>
+                        </div>
+                    </div>
+                    <span id="prompt-step-counter" class="text-xs text-slate-400 font-mono bg-slate-800/80 px-2.5 py-1 rounded-full border border-slate-700">Step 1 of 3</span>
+                </div>
+                <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                    <div id="prompt-progress-bar" class="bg-gradient-to-r from-hero-500 via-swag-purple to-swag-pink h-full w-1/3 transition-all duration-300"></div>
+                </div>
+            </div>
+
+            <div id="prompt-step-1" class="space-y-5">
+                <div class="space-y-1">
+                    <h2 class="text-lg sm:text-xl font-bold text-white tracking-tight">Define Your Pivot Trajectory</h2>
+                    <p class="text-xs text-slate-400 leading-relaxed">Map your current experience to high-demand target roles in Australia to calculate verified skill gaps.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Current Role (Verified on EH Profile)</label>
+                        <select id="prompt-input-current" class="w-full bg-slate-800/90 border border-slate-700 rounded-xl px-4 py-3 text-xs sm:text-sm text-white focus:ring-2 focus:ring-hero-500 focus:outline-none">
+                            <option value="cs_rep">Customer Support Specialist (Mid-Level • 3 yrs exp • $75k AUD)</option>
+                            <option value="ops_coord">Operations Coordinator (Mid-Level • 4 yrs exp • $82k AUD)</option>
+                            <option value="data_entry">Data & Records Specialist (Mid-Level • 3 yrs exp • $78k AUD)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Target Pivot Role</label>
+                        <select id="prompt-input-target" class="w-full bg-slate-800/90 border border-slate-700 rounded-xl px-4 py-3 text-xs sm:text-sm text-white focus:ring-2 focus:ring-hero-500 focus:outline-none">
+                            <option value="csm">Customer Success Manager ($95,000 - $115,000 AUD)</option>
+                            <option value="apm">Associate Product Manager ($105,000 - $125,000 AUD)</option>
+                            <option value="data_analyst">Junior / Mid Data Analyst ($90,000 - $108,000 AUD)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center pt-2">
+                    <button onclick="skipToIntake()" class="text-xs text-slate-500 hover:text-slate-300 transition-colors">
+                        Skip directly to workspace &rarr;
+                    </button>
+                    <button onclick="nextPromptStep(2)" class="px-6 py-2.5 bg-hero-600 hover:bg-hero-500 text-white rounded-xl text-xs font-semibold flex items-center gap-2 shadow-lg shadow-hero-600/30 transition-all">
+                        Next: Capacity & Preferences <i data-feather="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="prompt-step-2" class="space-y-5 hidden">
+                <div class="space-y-1">
+                    <h2 class="text-lg sm:text-xl font-bold text-white tracking-tight">Time Capacity & Learning Velocity</h2>
+                    <p class="text-xs text-slate-400">Set weekly bandwidth so we can tailor micro-modules and hands-on weekend gigs.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <label class="cursor-pointer border border-slate-700 bg-slate-800/70 p-4 rounded-xl hover:border-hero-500 transition-all flex flex-col justify-between space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-white">5 - 8 Hours / Week</span>
+                            <input type="radio" name="bandwidth" value="low" class="text-hero-600 focus:ring-hero-500" checked>
+                        </div>
+                        <p class="text-[11px] text-slate-400 leading-relaxed">Micro-modules (<40 mins) & weekend mini-gigs ideal for full-time employees.</p>
+                    </label>
+
+                    <label class="cursor-pointer border border-slate-700 bg-slate-800/70 p-4 rounded-xl hover:border-hero-500 transition-all flex flex-col justify-between space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-white">10 - 15 Hours / Week</span>
+                            <input type="radio" name="bandwidth" value="high" class="text-hero-600 focus:ring-hero-500">
+                        </div>
+                        <p class="text-[11px] text-slate-400 leading-relaxed">Accelerated sprint: Sponsored micro-internships & priority mentor feedback.</p>
+                    </label>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">Primary Transition Goal</label>
+                    <select id="prompt-input-goal" class="w-full bg-slate-800/90 border border-slate-700 rounded-xl px-4 py-3 text-xs sm:text-sm text-white focus:ring-2 focus:ring-hero-500 focus:outline-none">
+                        <option value="proof">Hands-on Work Experience (Micro-Gigs for Proof Portfolio)</option>
+                        <option value="mentor">1:1 Industry Mentorship & Executive Interview Prep</option>
+                        <option value="smartmatch">Direct Recruiter Warm Intro via SmartMatch ATS</option>
+                    </select>
+                </div>
+
+                <div class="flex justify-between pt-2">
+                    <button onclick="nextPromptStep(1)" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition-all">
+                        Back
+                    </button>
+                    <button onclick="nextPromptStep(3)" class="px-6 py-2.5 bg-hero-600 hover:bg-hero-500 text-white rounded-xl text-xs font-semibold flex items-center gap-2 shadow-lg shadow-hero-600/30 transition-all">
+                        Synthesize Plan <i data-feather="zap" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="prompt-step-3" class="space-y-5 hidden">
+                <div class="space-y-1">
+                    <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                        <i data-feather="activity" class="w-5 h-5 text-hero-400 animate-pulse"></i> Synthesizing Career Graph & Skill Delta
+                    </h2>
+                    <p class="text-xs text-slate-400">Comparing profile against 140+ active Australian SmartMatch requisitions...</p>
+                </div>
+
+                <div class="bg-black/70 border border-slate-800 rounded-2xl p-4 font-mono text-[11px] space-y-2.5 text-slate-300">
+                    <div id="trace-line-1" class="flex items-center gap-2 text-emerald-400">
+                        <i data-feather="check" class="w-3.5 h-3.5"></i> Baseline skills parsed: Support ticketing, CRM, customer advocacy.
+                    </div>
+                    <div id="trace-line-2" class="flex items-center gap-2 text-emerald-400">
+                        <i data-feather="check" class="w-3.5 h-3.5"></i> Target role mapped: 4 core competencies identified with 2 critical gaps.
+                    </div>
+                    <div id="trace-line-3" class="flex items-center gap-2 text-emerald-400">
+                        <i data-feather="check" class="w-3.5 h-3.5"></i> Micro-internships & pro-bono gigs indexed for Australian SMBs.
+                    </div>
+                    <div id="trace-line-4" class="flex items-center gap-2 text-emerald-400">
+                        <i data-feather="check" class="w-3.5 h-3.5"></i> Mentor review network and SmartMatch ATS pipeline active!
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button id="btn-launch-ui" onclick="finishPromptIntake()" class="w-full py-3.5 bg-gradient-to-r from-hero-600 via-swag-purple to-swag-pink hover:opacity-95 text-white rounded-xl text-xs sm:text-sm font-bold shadow-xl shadow-hero-600/30 transition-all flex items-center justify-center gap-2">
+                        <i data-feather="arrow-up-right" class="w-4 h-4"></i> Enter Personalized Hero Career Workspace
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <header class="bg-slate-950/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-xl gradient-border-glow p-0.5 flex items-center justify-center shadow-lg shadow-hero-600/20">
+                    <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+                        <i data-feather="zap" class="text-swag-purple w-4 h-4"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-extrabold text-base tracking-tight text-white">Hero<span class="text-transparent bg-clip-text bg-gradient-to-r from-hero-400 to-swag-purple">Career</span></span>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-hero-500/10 text-hero-400 border border-hero-500/20">EH Hackathon</span>
+                    </div>
+                    <span class="text-[10px] text-slate-400 block -mt-0.5">Powered by SmartMatch & Swag Work</span>
+                </div>
+            </div>
+
+            <!-- Central View Toggle: Career Changer vs Mentor -->
+            <div class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-800">
+                <button id="btn-changer-mode" onclick="switchMode('changer')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 bg-hero-600 text-white shadow-md shadow-hero-600/30">
+                    <i data-feather="user" class="inline w-3.5 h-3.5 mr-1"></i> Career Changer
+                </button>
+                <button id="btn-mentor-mode" onclick="switchMode('mentor')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 text-slate-400 hover:text-white">
+                    <i data-feather="award" class="inline w-3.5 h-3.5 mr-1"></i> Mentor Hub
+                </button>
+            </div>
+
+            <!-- Action Controls & Video Modal Trigger -->
+            <div class="flex items-center space-x-2.5">
+                <button onclick="openDemoVideoModal('changer')" class="flex items-center space-x-1.5 bg-swag-purple/15 hover:bg-swag-purple/25 text-swag-purple px-3 py-1.5 rounded-xl border border-swag-purple/30 text-xs font-semibold transition-all">
+                    <i data-feather="video" class="w-3.5 h-3.5"></i>
+                    <span class="hidden sm:inline">Watch Demos</span>
+                </button>
+
+                <button onclick="reopenIntakeWizard()" class="p-2 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white text-xs transition-all" title="Reconfigure Target Role">
+                    <i data-feather="sliders" class="w-4 h-4"></i>
+                </button>
+
+                <div class="hidden lg:flex items-center space-x-1.5 bg-amber-500/10 text-amber-400 px-3 py-1.5 rounded-xl border border-amber-500/20 text-xs font-semibold">
+                    <i data-feather="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                    <span id="hero-points-display">1,450 Hero Points</span>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <div id="hackathon-banner" class="bg-gradient-to-b from-slate-900 to-slate-950 border-b border-slate-800/80 py-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+            <div class="space-y-2 max-w-3xl">
+                <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-bold tracking-wider uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
+                        AU Talent Mobility Innovation
+                    </span>
+                    <span class="text-xs text-slate-400">Solution for 4.2M Australian Mid-Level Employees</span>
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                    Break the Mid-Career Ceiling with <span class="text-transparent bg-clip-text bg-gradient-to-r from-hero-400 via-swag-purple to-swag-pink">Proof of Capability</span>
+                </h1>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    Instead of getting rejected by automated ATS filters for lacking direct titles, mid-level workers bridge gaps via targeted modules and 10-hour real-world micro-gigs. Mentors review submissions to earn redeemable Hero Points.
+                </p>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-3">
+                <div class="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl flex items-center gap-3 shadow-inner">
+                    <div class="w-10 h-10 rounded-xl bg-hero-600/20 text-hero-400 border border-hero-500/30 flex items-center justify-center font-bold text-sm">
+                        AU
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-slate-400 block font-semibold">Average Salary Boost</span>
+                        <span class="text-xs font-bold text-emerald-400">+$24,500 AUD / Year</span>
+                    </div>
+                </div>
+                <button onclick="reopenIntakeWizard()" class="px-4 py-3 bg-gradient-to-r from-hero-600 to-swag-purple text-white text-xs font-bold rounded-xl shadow-lg shadow-hero-600/25 hover:opacity-90 transition-all flex items-center gap-2">
+                    <i data-feather="refresh-cw" class="w-3.5 h-3.5"></i> Re-Run Pivot Onboarding
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+        <!-- =================================================================== -->
+        <!-- VIEW 1: CAREER CHANGER WORKSPACE (DARK THEME)                       -->
+        <!-- =================================================================== -->
+        <div id="view-changer" class="space-y-8">
+            
+            <section class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+                    <div>
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i data-feather="crosshair" class="text-hero-400"></i> Career Pivot Simulator
+                        </h2>
+                        <p class="text-xs text-slate-400">Real-time gap evaluation against current Australian hiring criteria.</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                            <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Hero Platinum Tier Active
+                        </span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mt-6 items-center">
+                    <div class="lg:col-span-2 space-y-1.5">
+                        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Current Employment Background</label>
+                        <select id="select-current-role" onchange="recalculatePivot()" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-medium text-white focus:ring-2 focus:ring-hero-500 focus:outline-none">
+                            <option value="cs_rep">Customer Support Specialist (Mid-Level, 3 yrs)</option>
+                            <option value="ops_coord">Operations Coordinator (Mid-Level, 4 yrs)</option>
+                            <option value="data_entry">Data Entry & Records Analyst (Mid-Level, 3 yrs)</option>
+                        </select>
+                    </div>
+
+                    <div class="flex items-center justify-center pt-2 lg:pt-0">
+                        <div class="w-10 h-10 rounded-full bg-slate-800 text-hero-400 flex items-center justify-center border border-slate-700 shadow-md">
+                            <i data-feather="arrow-right" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 space-y-1.5">
+                        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">Target Pivot Position</label>
+                        <select id="select-target-role" onchange="recalculatePivot()" class="w-full bg-slate-950 border border-slate-700/80 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-medium text-white focus:ring-2 focus:ring-hero-500 focus:outline-none">
+                            <option value="csm">Customer Success Manager ($95k - $115k AUD)</option>
+                            <option value="apm">Associate Product Manager ($105k - $125k AUD)</option>
+                            <option value="data_analyst">Junior / Mid Data Analyst ($90k - $108k AUD)</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Readiness Dial Card -->
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between items-center text-center">
+                    <div class="w-full text-left">
+                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Readiness Score</h3>
+                        <p class="text-[11px] text-slate-500">Calculated via SmartMatch Engine</p>
+                    </div>
+
+                    <div class="relative w-44 h-44 my-4 flex items-center justify-center">
+                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                            <path class="text-slate-800" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                            <path id="readiness-dial-path" class="text-hero-500 progress-dial" stroke-dasharray="72, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        </svg>
+                        <div class="absolute flex flex-col items-center">
+                            <span id="readiness-percentage" class="text-3xl font-extrabold text-white">72%</span>
+                            <span class="text-[10px] font-semibold uppercase tracking-wider text-hero-400 bg-hero-500/10 border border-hero-500/20 px-2 py-0.5 rounded-full mt-1">High Trajectory</span>
+                        </div>
+                    </div>
+
+                    <div class="w-full bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-xs">
+                        <span class="font-semibold text-slate-300 block mb-0.5">SmartMatch Status:</span>
+                        <span id="smartmatch-status" class="text-amber-400 font-medium">1 Micro-Project required for warm recruiter dispatch.</span>
+                    </div>
+                </div>
+
+                <!-- Skill Delta Matrix -->
+                <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-base font-bold text-white">Skill Gap Breakdown Matrix</h3>
+                                <p class="text-xs text-slate-400">Benchmarked against verified Employment Hero JD data</p>
+                            </div>
+                            <span class="text-xs text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 font-medium">Live AU Market</span>
+                        </div>
+
+                        <div class="space-y-3" id="skill-matrix-container">
+                            <!-- Injected dynamically via JS -->
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                        <div class="flex items-center space-x-4">
+                            <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5"></span> Verified</span>
+                            <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-indigo-400 mr-1.5"></span> Transferable</span>
+                            <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-amber-400 mr-1.5"></span> Critical Gap</span>
+                        </div>
+                        <span class="text-[11px] text-slate-500 font-mono">Updated today</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-slate-900 border border-slate-800 rounded-3xl shadow-xl overflow-hidden">
+                
+                <!-- Action Navigation Tabs -->
+                <div class="flex border-b border-slate-800 bg-slate-950/70 overflow-x-auto">
+                    <button onclick="switchTab('tab-learning')" id="tab-btn-tab-learning" class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-400 hover:text-white tab-btn-active flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i data-feather="book-open" class="w-4 h-4"></i> 1. Learning Modules
+                    </button>
+                    <button onclick="switchTab('tab-gigs')" id="tab-btn-tab-gigs" class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-400 hover:text-white flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i data-feather="briefcase" class="w-4 h-4"></i> 2. Micro-Internships (Gigs)
+                    </button>
+                    <button onclick="switchTab('tab-mentorship')" id="tab-btn-tab-mentorship" class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-400 hover:text-white flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i data-feather="users" class="w-4 h-4"></i> 3. Mentorship & Review
+                    </button>
+                    <button onclick="switchTab('tab-smartmatch')" id="tab-btn-tab-smartmatch" class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-400 hover:text-white flex items-center gap-2 whitespace-nowrap transition-all">
+                        <i data-feather="send" class="w-4 h-4"></i> 4. SmartMatch Radar
+                    </button>
+                </div>
+
+                <!-- TAB 1: LEARNING ROADMAP -->
+                <div id="tab-learning" class="p-6 space-y-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-4 border-b border-slate-800">
+                        <div>
+                            <h4 class="text-base font-bold text-white">Recommended Modules & Micro-Courses</h4>
+                            <p class="text-xs text-slate-400">Short, accredited learning modules mapped directly to missing skill gaps.</p>
+                        </div>
+                        <span class="text-xs bg-hero-500/10 text-hero-400 px-3 py-1 rounded-full font-semibold border border-hero-500/20">
+                            Partner Network: LinkedIn Learning & Hero Academy
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="learning-roadmap-list">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
+                <!-- TAB 2: MICRO-INTERNSHIPS -->
+                <div id="tab-gigs" class="p-6 space-y-6 hidden">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-4 border-b border-slate-800">
+                        <div>
+                            <h4 class="text-base font-bold text-white">Real-World Micro-Internships (10-15 Hrs)</h4>
+                            <p class="text-xs text-slate-400">Complete verified deliverables for Australian companies to earn proof-of-work badges.</p>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-slate-400">
+                            <i data-feather="shield" class="w-4 h-4 text-emerald-400"></i> Includes Verified Industry Review
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="micro-gigs-list">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
+                <!-- TAB 3: MENTORSHIP & EXPERT REVIEW -->
+                <div id="tab-mentorship" class="p-6 space-y-6 hidden">
+                    <div class="flex justify-between items-center pb-4 border-b border-slate-800">
+                        <div>
+                            <h4 class="text-base font-bold text-white">Industry Mentor Coaching & Portfolio Review</h4>
+                            <p class="text-xs text-slate-400">Book 1:1 sessions or submit micro-project deliverables for feedback from senior leaders.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="mentors-list">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
+                <!-- TAB 4: SMARTMATCH RADAR -->
+                <div id="tab-smartmatch" class="p-6 space-y-6 hidden">
+                    <div class="bg-gradient-to-r from-hero-950 via-slate-900 to-slate-950 border border-hero-500/30 text-white rounded-2xl p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div class="space-y-2 max-w-xl">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-swag-purple/20 text-swag-purple border border-swag-purple/30">
+                                <i data-feather="radio" class="w-3 h-3 mr-1 animate-pulse"></i> SmartMatch Engine Active
+                            </span>
+                            <h3 class="text-lg font-bold">Automatic Recruiter Dispatch Pipeline</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Once your readiness score crosses <strong>75%</strong>, your anonymized Proof Profile is automatically dispatched directly into the Employment Hero ATS feeds of top Australian employers.
+                            </p>
+                        </div>
+                        <button onclick="triggerSimulatedIntro()" class="px-6 py-3 bg-gradient-to-r from-hero-600 to-swag-purple hover:opacity-95 text-white font-semibold rounded-xl text-xs shadow-lg shadow-hero-600/30 transition-all whitespace-nowrap">
+                            Simulate Recruiter Warm Intro
+                        </button>
+                    </div>
+
+                    <div class="border border-slate-800 rounded-2xl p-5 bg-slate-950 space-y-3">
+                        <h5 class="text-xs font-bold uppercase text-slate-400 tracking-wider">Matching Employers (Current Pipeline)</h5>
+                        <div class="space-y-2.5" id="smartmatch-employers-list">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- VIEW 2: MENTOR PORTAL WORKSPACE (DARK THEME)                        -->
+        <!-- =================================================================== -->
+        <div id="view-mentor" class="space-y-8 hidden">
+            
+            <section class="bg-gradient-to-r from-slate-900 via-hero-950 to-slate-900 text-white rounded-3xl p-6 shadow-xl border border-slate-800">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-14 h-14 rounded-2xl bg-swag-purple/20 border border-swag-purple/40 flex items-center justify-center text-swag-purple font-bold text-xl shadow-inner">
+                            MW
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-xl font-bold">Marcus Wright</h2>
+                                <span class="bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/30">Verified Senior Mentor</span>
+                            </div>
+                            <p class="text-xs text-slate-300">Lead Product Manager @ Atlassian Alumni • 38 Mentees Guided</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-3 bg-black/40 p-3.5 rounded-2xl border border-slate-800">
+                        <div class="text-right">
+                            <span class="block text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Hero Rewards Balance</span>
+                            <span class="text-lg font-extrabold text-amber-400">4,850 Pts ($485 AUD)</span>
+                        </div>
+                        <button onclick="openRedeemModal()" class="px-3.5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all">
+                            Redeem
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 shadow-lg space-y-1">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Pending Submissions</span>
+                    <span class="text-2xl font-bold text-white block">2 Reviews</span>
+                    <span class="text-[11px] text-amber-400 font-medium flex items-center gap-1">
+                        <i data-feather="clock" class="w-3 h-3"></i> Avg turnaround: 24h
+                    </span>
+                </div>
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 shadow-lg space-y-1">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Mentorship Hours</span>
+                    <span class="text-2xl font-bold text-white block">18.5 Hrs</span>
+                    <span class="text-[11px] text-emerald-400 font-medium flex items-center gap-1">
+                        <i data-feather="trending-up" class="w-3 h-3"></i> +4.2 hrs this month
+                    </span>
+                </div>
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 shadow-lg space-y-1">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Mentee Placement Rate</span>
+                    <span class="text-2xl font-bold text-white block">84%</span>
+                    <span class="text-[11px] text-hero-400 font-medium">Eligible for $500 Placement Bounty</span>
+                </div>
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 shadow-lg space-y-1">
+                    <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Peer Rating</span>
+                    <span class="text-2xl font-bold text-white block flex items-center gap-1">
+                        4.95 <i data-feather="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>
+                    </span>
+                    <span class="text-[11px] text-slate-400">Based on 28 verified reviews</span>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Deliverables to Review -->
+                <div class="lg:col-span-2 bg-slate-900 rounded-3xl p-6 shadow-xl border border-slate-800 space-y-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                        <h3 class="text-base font-bold text-white flex items-center gap-2">
+                            <i data-feather="file-text" class="text-hero-400"></i> Micro-Project Review Requests
+                        </h3>
+                        <span class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2.5 py-0.5 rounded-full font-semibold">
+                            Earn 300 Hero Pts per review
+                        </span>
+                    </div>
+
+                    <div class="space-y-3" id="mentor-reviews-list">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Incentive Perks Breakdown -->
+                <div class="bg-slate-900 rounded-3xl p-6 shadow-xl border border-slate-800 space-y-4">
+                    <h3 class="text-base font-bold text-white flex items-center gap-2">
+                        <i data-feather="gift" class="text-swag-purple"></i> Mentor Rewards Program
+                    </h3>
+                    <p class="text-xs text-slate-400">Incentives designed for senior Australian professionals:</p>
+
+                    <div class="space-y-3 text-xs">
+                        <div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800 space-y-1">
+                            <span class="font-bold text-white block">1:1 Coaching Consultations</span>
+                            <p class="text-slate-400">Set your own rate or earn $80 AUD/hr equivalent in Swag Rewards / direct payout.</p>
+                        </div>
+                        <div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800 space-y-1">
+                            <span class="font-bold text-white block">Micro-Project Deliverable Grading</span>
+                            <p class="text-slate-400">Earn 300 Hero Points (~$30 AUD) per validated project review and feedback loop.</p>
+                        </div>
+                        <div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800 space-y-1">
+                            <span class="font-bold text-white block">Successful Placement Bounty</span>
+                            <p class="text-slate-400">Receive $500 AUD cash bonus when your mentee secures a target role via SmartMatch.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <div id="modal-container" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[110] flex items-center justify-center hidden p-4">
+        <div class="bg-slate-900 border border-slate-800 text-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 animate-in fade-in zoom-in duration-200">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                <h4 id="modal-title" class="text-base font-bold text-white">Action</h4>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white p-1">
+                    <i data-feather="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div id="modal-body" class="text-xs text-slate-300 leading-relaxed space-y-3">
+                <!-- Content injected dynamically -->
+            </div>
+            <div class="pt-2 flex justify-end space-x-2">
+                <button onclick="closeModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-semibold transition-all">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="video-demo-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-[120] flex items-center justify-center hidden p-3 sm:p-6 overflow-y-auto">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-3xl w-full p-5 sm:p-7 shadow-2xl space-y-5 text-white">
+            
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-2xl bg-swag-purple/20 text-swag-purple flex items-center justify-center border border-swag-purple/30">
+                        <i data-feather="film" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold">Platform Feature Demonstration</h3>
+                        <p class="text-xs text-slate-400">Select a workflow tour to explore features in detail.</p>
+                    </div>
+                </div>
+                <button onclick="closeVideoModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+                    <i data-feather="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Video Tabs for Changer vs Mentor -->
+            <div class="grid grid-cols-2 gap-2 bg-slate-950 p-1.5 rounded-2xl border border-slate-800">
+                <button id="video-tab-changer" onclick="setDemoVideoTab('changer')" class="py-2 rounded-xl text-xs font-bold transition-all bg-hero-600 text-white shadow">
+                    <i data-feather="user" class="inline w-3.5 h-3.5 mr-1"></i> Career Changer Walkthrough
+                </button>
+                <button id="video-tab-mentor" onclick="setDemoVideoTab('mentor')" class="py-2 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white">
+                    <i data-feather="award" class="inline w-3.5 h-3.5 mr-1"></i> Mentor Portal & Verification
+                </button>
+            </div>
+
+            <!-- Embedded Video -->
+            <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black border border-slate-800 shadow-inner">
+                <iframe id="demo-video-iframe" class="w-full h-full" src="https://www.youtube.com/embed/tsDs2vKXPZs?enablejsapi=1" title="Feature Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <!-- Highlights -->
+            <div id="demo-video-features" class="bg-slate-950 border border-slate-800 rounded-2xl p-4 text-xs space-y-2.5">
+                <!-- Dynamically loaded per tab -->
+            </div>
+
+            <div class="flex justify-between items-center pt-2">
+                <span class="text-[11px] text-slate-400">All features shown are live in the interactive interface.</span>
+                <button onclick="closeVideoModal()" class="px-5 py-2 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl text-xs transition-all">
+                    Return to Platform
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const PIVOT_DATA = {
+            cs_rep: {
+                csm: {
+                    readiness: 72,
+                    skills: [
+                        { name: "Customer Relationship Management & Escalations", status: "verified", desc: "Demonstrated 3+ yrs handling high-touch Australian SaaS support" },
+                        { name: "SaaS Product Workflows & User Adoption", status: "transferable", desc: "Extensive product knowledge from daily bug & feature tickets" },
+                        { name: "Churn Analysis & Account Health Metrics", status: "gap", desc: "Needs commercial account retention and pipeline tracking practice" },
+                        { name: "Executive Stakeholder Communication (QBRs)", status: "gap", desc: "Requires experience delivering Quarterly Business Reviews" }
+                    ],
+                    courses: [
+                        { title: "SaaS Customer Success Fundamentals", provider: "Hero Academy", duration: "4 hrs", points: 150, gap: "Churn Analysis", completed: true },
+                        { title: "Conducting High-Impact QBRs for C-Suite", provider: "LinkedIn Learning Partner", duration: "3 hrs", points: 100, gap: "Executive Communication", completed: false }
+                    ],
+                    gigs: [
+                        { title: "Build Retention Playbook & Churn Dashboard", company: "AussieSaaS Logistics (Melbourne)", duration: "10 hrs", reward: "250 Pts + Proof Badge", verifiedBy: "Sarah L. (Head of CS)" },
+                        { title: "Conduct 3 Simulated QBR Executive Presentations", company: "FinTech AU Group (Sydney)", duration: "12 hrs", reward: "300 Pts + QBR Badge", verifiedBy: "Marcus W. (Lead Mentor)" }
+                    ]
+                },
+                apm: {
+                    readiness: 56,
+                    skills: [
+                        { name: "User Empathy & Problem Scoping", status: "verified", desc: "Extracted from 2,000+ support ticket resolutions" },
+                        { name: "Basic Wireframing & User Journey Mapping", status: "transferable", desc: "Demonstrated bug reproduction workflow skills" },
+                        { name: "Agile/Scrum Roadmap & Sprint Planning", status: "gap", desc: "Missing formal backlog grooming & sprint prioritization" },
+                        { name: "Product Analytics (SQL / Amplitude)", status: "gap", desc: "No direct experience querying relational event streams" }
+                    ],
+                    courses: [
+                        { title: "Product Backlog & Agile Essentials", provider: "Hero Academy", duration: "6 hrs", points: 200, gap: "Agile Planning", completed: false },
+                        { title: "SQL for Product Managers", provider: "Coursera Partner", duration: "8 hrs", points: 250, gap: "Product Analytics", completed: false }
+                    ],
+                    gigs: [
+                        { title: "Map User Funnel Drop-off for Onboarding", company: "HealthTech Sydney", duration: "15 hrs", reward: "400 Pts + APM Proof Badge", verifiedBy: "Dave K. (VP Product)" }
+                    ]
+                },
+                data_analyst: {
+                    readiness: 48,
+                    skills: [
+                        { name: "Data Accuracy & Cleansing", status: "verified", desc: "High attention to detail in user records management" },
+                        { name: "Excel Pivot Tables & Lookup Formulas", status: "transferable", desc: "Proficient in baseline operational reporting" },
+                        { name: "SQL Querying & Multi-Table Joins", status: "gap", desc: "Requires relational database modeling fundamentals" },
+                        { name: "BI Dashboarding (PowerBI / Tableau)", status: "gap", desc: "Needs live business dashboard publishing experience" }
+                    ],
+                    courses: [
+                        { title: "SQL Fundamentals for Data Pivots", provider: "Hero Academy", duration: "10 hrs", points: 300, gap: "SQL Querying", completed: false }
+                    ],
+                    gigs: [
+                        { title: "Clean & Model Customer Support Dataset", company: "RetailTech Melbourne", duration: "12 hrs", reward: "350 Pts + SQL Badge", verifiedBy: "Elena R. (Lead Analyst)" }
+                    ]
+                }
+            },
+            ops_coord: {
+                csm: { readiness: 78, skills: [], courses: [], gigs: [] },
+                apm: { readiness: 65, skills: [], courses: [], gigs: [] },
+                data_analyst: { readiness: 60, skills: [], courses: [], gigs: [] }
+            },
+            data_entry: {
+                csm: { readiness: 50, skills: [], courses: [], gigs: [] },
+                apm: { readiness: 42, skills: [], courses: [], gigs: [] },
+                data_analyst: { readiness: 76, skills: [], courses: [], gigs: [] }
+            }
+        };
+
+        const MENTORS = [
+            { name: "Marcus Wright", role: "Senior PM @ Atlassian Alumni", rating: 4.9, reviews: 28, fee: "Free (Hero Sponsored)", heroBonus: "+300 Pts for Mentee" },
+            { name: "Priya Sharma", role: "Head of Customer Success @ Canva Partner", rating: 5.0, reviews: 42, fee: "$40 AUD / hr", heroBonus: "+200 Pts for Mentee" },
+            { name: "Tom Redman", role: "Lead Data Scientist @ Employment Hero", rating: 4.8, reviews: 19, fee: "Free (Internal Hero Mentor)", heroBonus: "+300 Pts for Mentee" }
+        ];
+
+        const SMARTMATCH_EMPLOYERS = [
+            { name: "Employment Hero Ecosystem", openRole: "Customer Success Manager (Mid)", match: "94% Fit", status: "Ready for Warm Intro" },
+            { name: "SafetyCulture Sydney", openRole: "Associate Product Manager", match: "86% Fit", status: "Needs 1 Micro-Project" },
+            { name: "Xero Australia", openRole: "Customer Retention Specialist", match: "91% Fit", status: "Ready for Warm Intro" }
+        ];
+
+        const MENTOR_PENDING_REVIEWS = [
+            { mentee: "Jordan S.", project: "Retention Playbook for AussieSaaS", submitted: "2 hours ago", reward: "300 Hero Points" },
+            { mentee: "Alex M.", project: "SQL Query Optimization Script", submitted: "Yesterday", reward: "300 Hero Points" }
+        ];
+
+        const VIDEO_DETAILS = {
+            changer: {
+                url: "https://www.youtube.com/embed/tsDs2vKXPZs?autoplay=1",
+                title: "Career Changer Journey",
+                highlights: [
+                    "<strong>00:45</strong> — Profile onboarding & verified skill recognition from employment history.",
+                    "<strong>01:30</strong> — AI Skill Gap Matrix & recommended micro-courses.",
+                    "<strong>02:40</strong> — Applying for 10-hour Micro-Internships for proof-of-work badges.",
+                    "<strong>03:30</strong> — Triggering SmartMatch automated ATS recruiter warm introductions."
+                ]
+            },
+            mentor: {
+                url: "https://www.youtube.com/embed/Q5AV0i7Fn3Y?autoplay=1",
+                title: "Mentor Portal & Verification Flow",
+                highlights: [
+                    "<strong>01:15</strong> — Reviewing mentee micro-project deliverable submissions.",
+                    "<strong>03:40</strong> — Approving verified skill badges and issuing constructive feedback.",
+                    "<strong>06:10</strong> — Hero Rewards accumulation (earning 300 Pts / review).",
+                    "<strong>09:20</strong> — Redeeming rewards via Swag Stash bank deposit or gift cards."
+                ]
+            }
+        };
+
+        function nextPromptStep(step) {
+            document.getElementById('prompt-step-1').classList.add('hidden');
+            document.getElementById('prompt-step-2').classList.add('hidden');
+            document.getElementById('prompt-step-3').classList.add('hidden');
+
+            document.getElementById(`prompt-step-${step}`).classList.remove('hidden');
+            document.getElementById('prompt-step-counter').innerText = `Step ${step} of 3`;
+
+            const progressBar = document.getElementById('prompt-progress-bar');
+            if (step === 1) progressBar.style.width = '33%';
+            if (step === 2) progressBar.style.width = '66%';
+            if (step === 3) progressBar.style.width = '100%';
+
+            feather.replace();
+        }
+
+        function skipToIntake() {
+            finishPromptIntake();
+        }
+
+        function reopenIntakeWizard() {
+            const overlay = document.getElementById('intake-screen-overlay');
+            overlay.classList.remove('hidden', 'opacity-0');
+            nextPromptStep(1);
+        }
+
+        function finishPromptIntake() {
+            const currentSelected = document.getElementById('prompt-input-current').value;
+            const targetSelected = document.getElementById('prompt-input-target').value;
+
+            document.getElementById('select-current-role').value = currentSelected;
+            document.getElementById('select-target-role').value = targetSelected;
+
+            const overlay = document.getElementById('intake-screen-overlay');
+            overlay.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 300);
+
+            recalculatePivot();
+        }
+
+        function switchMode(mode) {
+            const changerBtn = document.getElementById('btn-changer-mode');
+            const mentorBtn = document.getElementById('btn-mentor-mode');
+            const changerDom = document.getElementById('view-changer');
+            const mentorDom = document.getElementById('view-mentor');
+
+            if (mode === 'changer') {
+                changerBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 bg-hero-600 text-white shadow-md shadow-hero-600/30";
+                mentorBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 text-slate-400 hover:text-white";
+                changerDom.classList.remove('hidden');
+                mentorDom.classList.add('hidden');
+            } else {
+                mentorBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 bg-hero-600 text-white shadow-md shadow-hero-600/30";
+                changerBtn.className = "px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 text-slate-400 hover:text-white";
+                mentorDom.classList.remove('hidden');
+                changerDom.classList.add('hidden');
+            }
+            feather.replace();
+        }
+
+        function switchTab(tabId) {
+            const tabs = ['tab-learning', 'tab-gigs', 'tab-mentorship', 'tab-smartmatch'];
+            tabs.forEach(t => {
+                const dom = document.getElementById(t);
+                const btn = document.getElementById('tab-btn-' + t);
+                if (t === tabId) {
+                    dom.classList.remove('hidden');
+                    btn.classList.add('tab-btn-active');
+                } else {
+                    dom.classList.add('hidden');
+                    btn.classList.remove('tab-btn-active');
+                }
+            });
+            feather.replace();
+        }
+
+        function recalculatePivot() {
+            const currentRole = document.getElementById('select-current-role').value;
+            const targetRole = document.getElementById('select-target-role').value;
+
+            const scenario = (PIVOT_DATA[currentRole] && PIVOT_DATA[currentRole][targetRole]) 
+                ? PIVOT_DATA[currentRole][targetRole] 
+                : PIVOT_DATA['cs_rep']['csm'];
+
+            const percentage = scenario.readiness;
+            document.getElementById('readiness-percentage').innerText = percentage + '%';
+            
+            const dial = document.getElementById('readiness-dial-path');
+            dial.setAttribute('stroke-dasharray', `${percentage}, 100`);
+
+            const statusText = document.getElementById('smartmatch-status');
+            if (percentage >= 75) {
+                statusText.innerText = "High Readiness! Your profile is ready for automatic SmartMatch recruiter push.";
+                statusText.className = "text-emerald-400 font-medium";
+            } else {
+                statusText.innerText = `Skill Gap Detected (${100 - percentage}%). Complete 1 micro-project to activate push.`;
+                statusText.className = "text-amber-400 font-medium";
+            }
+
+            renderSkillMatrix(scenario.skills);
+            renderLearningRoadmap(scenario.courses);
+            renderMicroGigs(scenario.gigs);
+        }
+
+        function renderSkillMatrix(skills) {
+            const container = document.getElementById('skill-matrix-container');
+            if (!skills || skills.length === 0) {
+                skills = PIVOT_DATA['cs_rep']['csm'].skills;
+            }
+
+            container.innerHTML = skills.map(s => {
+                let badgeClass = "bg-amber-500/10 text-amber-400 border-amber-500/30";
+                let icon = "alert-circle";
+                if (s.status === 'verified') {
+                    badgeClass = "bg-emerald-500/10 text-emerald-400 border-emerald-500/30";
+                    icon = "check-circle";
+                } else if (s.status === 'transferable') {
+                    badgeClass = "bg-indigo-500/10 text-indigo-400 border-indigo-500/30";
+                    icon = "repeat";
+                }
+
+                return `
+                    <div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800/90 flex items-start justify-between gap-3">
+                        <div class="space-y-1">
+                            <span class="text-xs font-bold text-white block">${s.name}</span>
+                            <p class="text-[11px] text-slate-400">${s.desc}</p>
+                        </div>
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-semibold border ${badgeClass} capitalize shrink-0">
+                            <i data-feather="${icon}" class="w-3 h-3 mr-1"></i> ${s.status}
+                        </span>
+                    </div>
+                `;
+            }).join('');
+            feather.replace();
+        }
+
+        function renderLearningRoadmap(courses) {
+            const container = document.getElementById('learning-roadmap-list');
+            if (!courses || courses.length === 0) {
+                courses = PIVOT_DATA['cs_rep']['csm'].courses;
+            }
+
+            container.innerHTML = courses.map((c, i) => `
+                <div class="p-5 rounded-2xl border border-slate-800 bg-slate-950 shadow-md flex flex-col justify-between space-y-4">
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between items-start">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-hero-400 bg-hero-500/10 border border-hero-500/20 px-2 py-0.5 rounded-md">Fills Gap: ${c.gap}</span>
+                            <span class="text-xs font-semibold text-amber-400 flex items-center gap-1">
+                                <i data-feather="star" class="w-3.5 h-3.5 fill-amber-400"></i> +${c.points} Pts
+                            </span>
+                        </div>
+                        <h4 class="text-sm font-bold text-white">${c.title}</h4>
+                        <p class="text-[11px] text-slate-400">${c.provider} • Duration: ${c.duration}</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+                        <span class="text-[10px] text-slate-500 font-medium">Included in Hero Platinum</span>
+                        <button onclick="toggleCourseComplete(${i})" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold ${c.completed ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-hero-600 hover:bg-hero-500 text-white shadow-md shadow-hero-600/30'} transition-all">
+                            ${c.completed ? 'Completed ✓' : 'Start Learning'}
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            feather.replace();
+        }
+
+        function renderMicroGigs(gigs) {
+            const container = document.getElementById('micro-gigs-list');
+            if (!gigs || gigs.length === 0) {
+                gigs = PIVOT_DATA['cs_rep']['csm'].gigs;
+            }
+
+            container.innerHTML = gigs.map(g => `
+                <div class="p-5 rounded-2xl border border-slate-800 bg-slate-950 shadow-md flex flex-col justify-between space-y-4">
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between items-start">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-swag-purple bg-purple-500/10 border border-purple-500/20 px-2 py-0.5 rounded-md">10-15 Hr Project</span>
+                            <span class="text-xs font-bold text-emerald-400">${g.reward}</span>
+                        </div>
+                        <h4 class="text-sm font-bold text-white">${g.title}</h4>
+                        <p class="text-[11px] text-slate-400">Sponsor: ${g.company} • Est: ${g.duration}</p>
+                    </div>
+                    <div class="p-2.5 bg-slate-900 rounded-xl text-[11px] text-slate-300 border border-slate-800">
+                        <i data-feather="check-circle" class="w-3.5 h-3.5 inline text-emerald-400 mr-1"></i> Industry Reviewer: <strong>${g.verifiedBy}</strong>
+                    </div>
+                    <button onclick="openApplyGigModal('${g.title}')" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-semibold transition-all">
+                        Apply for Micro-Internship
+                    </button>
+                </div>
+            `).join('');
+            feather.replace();
+        }
+
+        function renderMentors() {
+            const container = document.getElementById('mentors-list');
+            container.innerHTML = MENTORS.map(m => `
+                <div class="p-5 rounded-2xl border border-slate-800 bg-slate-950 shadow-md flex flex-col justify-between space-y-4">
+                    <div class="space-y-2.5">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-hero-600/20 border border-hero-500/30 text-hero-400 font-bold flex items-center justify-center text-xs">
+                                ${m.name.split(' ').map(n=>n[0]).join('')}
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white">${m.name}</h4>
+                                <span class="text-[10px] text-slate-400 block">${m.role}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2 text-xs">
+                            <span class="flex items-center text-amber-400 font-bold text-[11px]">
+                                <i data-feather="star" class="w-3 h-3 fill-amber-400 mr-0.5"></i> ${m.rating}
+                            </span>
+                            <span class="text-[10px] text-slate-500">(${m.reviews} sessions)</span>
+                        </div>
+                    </div>
+                    <div class="p-2.5 bg-slate-900 rounded-xl text-[10px] text-hero-300 font-medium border border-slate-800">
+                        Bonus: ${m.heroBonus}
+                    </div>
+                    <button onclick="openBookMentorModal('${m.name}')" class="w-full py-2.5 bg-hero-600 hover:bg-hero-500 text-white rounded-xl text-xs font-semibold transition-all shadow-md shadow-hero-600/20">
+                        Book Session (${m.fee})
+                    </button>
+                </div>
+            `).join('');
+            feather.replace();
+        }
+
+        function renderEmployers() {
+            const container = document.getElementById('smartmatch-employers-list');
+            container.innerHTML = SMARTMATCH_EMPLOYERS.map(e => `
+                <div class="p-3.5 bg-slate-900 rounded-2xl border border-slate-800 flex items-center justify-between text-xs">
+                    <div>
+                        <span class="font-bold text-white block">${e.name}</span>
+                        <span class="text-slate-400 text-[11px]">Target Role: ${e.openRole}</span>
+                    </div>
+                    <div class="text-right space-y-1">
+                        <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">${e.match}</span>
+                        <span class="block text-[10px] text-slate-400">${e.status}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderMentorReviews() {
+            const container = document.getElementById('mentor-reviews-list');
+            container.innerHTML = MENTOR_PENDING_REVIEWS.map(r => `
+                <div class="p-3.5 bg-slate-950 rounded-2xl border border-slate-800 flex items-center justify-between text-xs gap-3">
+                    <div>
+                        <span class="font-bold text-white">${r.mentee}</span> submitted <span class="font-medium text-hero-400">${r.project}</span>
+                        <span class="block text-[10px] text-slate-500">Submitted ${r.submitted}</span>
+                    </div>
+                    <button onclick="openReviewDeliverableModal('${r.mentee}', '${r.project}')" class="px-3.5 py-2 bg-swag-purple hover:bg-purple-600 text-white font-semibold rounded-xl text-xs transition-all shrink-0 shadow-md">
+                        Review & Claim ${r.reward}
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function openModal(title, bodyHtml) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-body').innerHTML = bodyHtml;
+            document.getElementById('modal-container').classList.remove('hidden');
+            feather.replace();
+        }
+
+        function closeModal() {
+            document.getElementById('modal-container').classList.add('hidden');
+        }
+
+        function toggleCourseComplete(index) {
+            const currentRole = document.getElementById('select-current-role').value;
+            const targetRole = document.getElementById('select-target-role').value;
+            const scenario = PIVOT_DATA[currentRole]?.[targetRole] || PIVOT_DATA['cs_rep']['csm'];
+
+            scenario.courses[index].completed = !scenario.courses[index].completed;
+            
+            if (scenario.courses[index].completed) {
+                scenario.readiness = Math.min(100, scenario.readiness + 8);
+            } else {
+                scenario.readiness = Math.max(0, scenario.readiness - 8);
+            }
+
+            recalculatePivot();
+            openModal("Learning Progress Synced", `
+                <p>Updated module: <strong class="text-white">"${scenario.courses[index].title}"</strong></p>
+                <p class="text-emerald-400 font-semibold">+150 Hero Points added to your balance.</p>
+                <p class="text-slate-400">Your SmartMatch readiness dial updated automatically.</p>
+            `);
+        }
+
+        function openApplyGigModal(title) {
+            openModal("Apply for Micro-Internship", `
+                <p>Applying for: <strong class="text-white">${title}</strong></p>
+                <p class="text-slate-400">This 10-15 hour hands-on project is hosted by an Australian partner and graded by a verified mentor.</p>
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">Intent & Scope Confirmation</label>
+                    <textarea class="w-full text-xs p-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none" rows="3" placeholder="Briefly summarize your availability to deliver this project..."></textarea>
+                </div>
+                <button onclick="confirmGigApplication()" class="w-full py-2.5 bg-hero-600 hover:bg-hero-500 text-white font-semibold rounded-xl text-xs transition-all">Submit Application</button>
+            `);
+        }
+
+        function confirmGigApplication() {
+            closeModal();
+            openModal("Application Submitted!", "<p class='text-emerald-400 font-semibold'>Application received by the sponsor team.</p><p class='text-slate-300'>You will receive a notification in Swag Work once approved to begin work.</p>");
+        }
+
+        function openBookMentorModal(mentorName) {
+            openModal(`Book Session with ${mentorName}`, `
+                <p class="text-slate-300">Select a convenient time slot for your 1:1 Career Transition session:</p>
+                <div class="space-y-2">
+                    <button onclick="confirmBooking()" class="w-full text-left p-3 border border-slate-800 bg-slate-950 rounded-xl hover:border-hero-500 text-xs text-white">📅 Thursday • 4:00 PM AEST (Sydney / Melb)</button>
+                    <button onclick="confirmBooking()" class="w-full text-left p-3 border border-slate-800 bg-slate-950 rounded-xl hover:border-hero-500 text-xs text-white">📅 Friday • 11:00 AM AEST (Sydney / Melb)</button>
+                </div>
+            `);
+        }
+
+        function confirmBooking() {
+            closeModal();
+            openModal("Coaching Session Confirmed!", "<p class='text-emerald-400 font-semibold'>Calendar invite dispatched.</p><p class='text-slate-300'>Your mentor will review your current Skill Gap Matrix prior to the call.</p>");
+        }
+
+        function triggerSimulatedIntro() {
+            openModal("SmartMatch Recruiter Dispatch Triggered", `
+                <div class="space-y-2.5 text-xs">
+                    <p class="text-emerald-400 font-bold flex items-center gap-1.5"><i data-feather="check-circle" class="w-4 h-4"></i> Warm Introduction Dispatched!</p>
+                    <p class="text-slate-300">Your verified capability profile (completed playbooks, QBR certifications & course badges) was submitted to <strong>Employment Hero Ecosystem Hiring Team</strong>.</p>
+                    <p class="text-slate-400">Recruiters see your practical proof metrics instead of static resume filtering.</p>
+                </div>
+            `);
+        }
+
+        function openReviewDeliverableModal(mentee, project) {
+            openModal(`Review Deliverable: ${mentee}`, `
+                <p>Reviewing submission: <strong class="text-white">${project}</strong></p>
+                <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5">
+                    <span class="font-bold text-white block">Mentee Notes:</span>
+                    <p class="italic text-slate-400">"Attached completed Customer Retention Analysis & QBR presentation slides for review."</p>
+                </div>
+                <div class="space-y-2">
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase">Mentor Rating & Feedback</label>
+                    <select class="w-full text-xs p-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white">
+                        <option>⭐⭐⭐⭐⭐ (Approved & Verified Badge Granted)</option>
+                        <option>⭐⭐⭐⭐ (Approved with minor polish)</option>
+                    </select>
+                    <textarea class="w-full text-xs p-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white" rows="2" placeholder="Write constructive feedback for mentee..."></textarea>
+                </div>
+                <button onclick="confirmMentorReview()" class="w-full py-2.5 bg-swag-purple hover:bg-purple-600 text-white font-semibold rounded-xl text-xs transition-all">
+                    Approve Deliverable & Claim 300 Hero Points
+                </button>
+            `);
+        }
+
+        function confirmMentorReview() {
+            closeModal();
+            openModal("Review Approved & Rewards Credited!", "<p class='text-emerald-400 font-bold'>+300 Hero Points credited to your account balance ($30 AUD equivalent).</p><p class='text-slate-300'>Mentee profile updated with Verified Proof Badge.</p>");
+        }
+
+        function openRedeemModal() {
+            openModal("Redeem Hero Rewards", `
+                <p class="text-slate-300">Select how to withdraw your balance of <strong class="text-amber-400">4,850 Hero Points ($485 AUD)</strong>:</p>
+                <div class="space-y-2 text-xs">
+                    <div class="p-3 border border-slate-800 bg-slate-950 rounded-xl flex justify-between items-center">
+                        <span class="text-white">💳 Direct Bank Deposit (Swag Stash)</span>
+                        <button onclick="closeModal()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-lg">Payout $485</button>
+                    </div>
+                    <div class="p-3 border border-slate-800 bg-slate-950 rounded-xl flex justify-between items-center">
+                        <span class="text-white">🎁 Retail Gift Cards (JB Hi-Fi, Woolworths)</span>
+                        <button onclick="closeModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-lg">Redeem</button>
+                    </div>
+                </div>
+            `);
+        }
+
+        function openDemoVideoModal(type) {
+            setDemoVideoTab(type);
+            document.getElementById('video-demo-modal').classList.remove('hidden');
+            feather.replace();
+        }
+
+        function closeVideoModal() {
+            const iframe = document.getElementById('demo-video-iframe');
+            iframe.src = "";
+            document.getElementById('video-demo-modal').classList.add('hidden');
+        }
+
+        function setDemoVideoTab(type) {
+            const changerBtn = document.getElementById('video-tab-changer');
+            const mentorBtn = document.getElementById('video-tab-mentor');
+            const iframe = document.getElementById('demo-video-iframe');
+            const highlightsContainer = document.getElementById('demo-video-features');
+
+            const info = VIDEO_DETAILS[type];
+            iframe.src = info.url;
+
+            if (type === 'changer') {
+                changerBtn.className = "py-2 rounded-xl text-xs font-bold transition-all bg-hero-600 text-white shadow";
+                mentorBtn.className = "py-2 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white";
+            } else {
+                mentorBtn.className = "py-2 rounded-xl text-xs font-bold transition-all bg-hero-600 text-white shadow";
+                changerBtn.className = "py-2 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white";
+            }
+
+            highlightsContainer.innerHTML = `
+                <span class="font-bold text-slate-300 block mb-1">Key ${info.title} Highlights:</span>
+                <ul class="space-y-1.5 text-slate-400">
+                    ${info.highlights.map(h => `<li class="flex items-start gap-1.5"><i data-feather="check-circle" class="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5"></i> <span>${h}</span></li>`).join('')}
+                </ul>
+            `;
+            feather.replace();
+        }
+
+        // Initialize on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            feather.replace();
+            recalculatePivot();
+            renderMentors();
+            renderEmployers();
+            renderMentorReviews();
+        });
+    </script>
+</body>
+</html>
